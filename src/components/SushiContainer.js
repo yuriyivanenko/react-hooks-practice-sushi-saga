@@ -3,7 +3,7 @@ import MoreButton from './MoreButton'
 import LessButton from './LessButton'
 import Sushi from './Sushi'
 
-function SushiContainer(props) {
+function SushiContainer({ handleEatenSushi }) {
   const [sushiList, setSushiList] = useState(null)
   const [startIndex, setStartIndex] = useState(0)
   const [endIndex, setEndIndex] = useState(4)
@@ -37,18 +37,14 @@ function SushiContainer(props) {
     setEndIndex(endIndex - 4)
   }
 
-  const VisibleSushi = () => {
-    return sushiList.slice(startIndex, endIndex).map((sushi) => {
-      return <Sushi key={`sushi${sushi.id}`} sushiInfo={sushi} />
-    })
-  }
-
   if (!sushiList) return <h2>Loading...</h2>
 
   return (
     <div className='belt'>
       <LessButton startIndex={startIndex} handleBtnClick={handleLessBtnClick} />
-      <VisibleSushi />
+      {sushiList.slice(startIndex, endIndex).map((sushi) => {
+        return <Sushi key={`sushi${sushi.id}`} handleEatenSushi={handleEatenSushi} sushiInfo={sushi} />
+      })}
       <MoreButton handleBtnClick={handleMoreBtnClick} />
     </div>
   )
