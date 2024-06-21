@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 
-function Sushi({ sushiInfo: { name, img_url, price }, handleEatenSushi }) {
+function Sushi({ sushiInfo, handleEatenSushi }) {
+  const { name, img_url, price } = sushiInfo
   const [isEaten, setIsEaten] = useState(false)
 
   const handlePlateClick = () => {
     if (isEaten === false) {
       setIsEaten(true)
-      handleEatenSushi(name)
+      handleEatenSushi(sushiInfo)
     }
   }
   console.log(isEaten)
