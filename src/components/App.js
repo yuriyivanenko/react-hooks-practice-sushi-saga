@@ -3,8 +3,6 @@ import SushiContainer from './SushiContainer'
 import MoneyForm from './MoneyForm'
 import Table from './Table'
 
-const API = 'http://localhost:3001/sushis'
-
 function App() {
   const [plates, setPlates] = useState([])
   const [budget, setBudget] = useState(100)
