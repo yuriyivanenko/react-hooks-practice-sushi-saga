@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import MoreButton from './MoreButton'
+import LessButton from './LessButton'
 import Sushi from './Sushi'
 
 function SushiContainer(props) {
@@ -26,9 +27,14 @@ function SushiContainer(props) {
     fetchSushi()
   }, [])
 
-  const handleBtnClick = () => {
+  const handleMoreBtnClick = () => {
     setStartIndex(startIndex + 4)
     setEndIndex(endIndex + 4)
+  }
+
+  const handleLessBtnClick = () => {
+    setStartIndex(startIndex - 4)
+    setEndIndex(endIndex - 4)
   }
 
   const VisibleSushi = () => {
@@ -41,8 +47,9 @@ function SushiContainer(props) {
 
   return (
     <div className='belt'>
+      <LessButton startIndex={startIndex} handleBtnClick={handleLessBtnClick} />
       <VisibleSushi />
-      <MoreButton handleBtnClick={handleBtnClick} />
+      <MoreButton handleBtnClick={handleMoreBtnClick} />
     </div>
   )
 }
