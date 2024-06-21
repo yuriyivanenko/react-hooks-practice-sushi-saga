@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import MoreButton from './MoreButton'
-import LessButton from './LessButton'
 import Sushi from './Sushi'
 
 function SushiContainer({ handleEatenSushi }) {
@@ -32,16 +31,10 @@ function SushiContainer({ handleEatenSushi }) {
     setEndIndex(endIndex + 4)
   }
 
-  const handleLessBtnClick = () => {
-    setStartIndex(startIndex - 4)
-    setEndIndex(endIndex - 4)
-  }
-
   if (!sushiList) return <h2>Loading...</h2>
 
   return (
     <div className='belt'>
-      <LessButton startIndex={startIndex} handleBtnClick={handleLessBtnClick} />
       {sushiList.slice(startIndex, endIndex).map((sushi) => {
         return <Sushi key={`sushi${sushi.id}`} handleEatenSushi={handleEatenSushi} sushiInfo={sushi} />
       })}
