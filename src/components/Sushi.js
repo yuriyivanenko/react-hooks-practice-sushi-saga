@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
 
-function Sushi({ sushiInfo, handleEatenSushi }) {
+function Sushi({ sushiInfo, handleEatenSushi, budget }) {
   const { name, img_url, price } = sushiInfo
   const [isEaten, setIsEaten] = useState(false)
 
   const handlePlateClick = () => {
-    if (isEaten === false) {
+    if (isEaten === false && budget >= price) {
       setIsEaten(true)
       handleEatenSushi(sushiInfo)
+    } else if (budget < price && isEaten === false) {
+      alert(`You don't have enough money!`)
     }
   }
-  console.log(isEaten)
+
   return (
     <div className='sushi'>
       <div className='plate' style={isEaten ? null : { cursor: 'pointer' }} onClick={handlePlateClick}>

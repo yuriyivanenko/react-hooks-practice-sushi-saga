@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import MoreButton from './MoreButton'
 import Sushi from './Sushi'
 
-function SushiContainer({ handleEatenSushi }) {
+function SushiContainer({ handleEatenSushi, budget }) {
   const [sushiList, setSushiList] = useState(null)
   const [startIndex, setStartIndex] = useState(0)
   const [endIndex, setEndIndex] = useState(4)
@@ -36,7 +36,7 @@ function SushiContainer({ handleEatenSushi }) {
   return (
     <div className='belt'>
       {sushiList.slice(startIndex, endIndex).map((sushi) => {
-        return <Sushi key={`sushi${sushi.id}`} handleEatenSushi={handleEatenSushi} sushiInfo={sushi} />
+        return <Sushi key={`sushi${sushi.id}`} handleEatenSushi={handleEatenSushi} sushiInfo={sushi} budget={budget} />
       })}
       <MoreButton handleBtnClick={handleMoreBtnClick} />
     </div>
