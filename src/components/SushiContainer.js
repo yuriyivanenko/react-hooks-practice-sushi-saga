@@ -1,37 +1,22 @@
 import React, { useEffect, useState } from 'react'
+import useFetch from '../hooks/useFetch'
 import MoreButton from './MoreButton'
 import Sushi from './Sushi'
 
 function SushiContainer({ handleEatenSushi, budget }) {
+  const { data, loading, error } = useFetch('http://localhost:3001/sushis')
   const [sushiList, setSushiList] = useState(null)
   const [startIndex, setStartIndex] = useState(0)
   const [endIndex, setEndIndex] = useState(4)
 
   useEffect(() => {
-    const fetchSushi = async () => {
-      try {
-        const response = await fetch('http://localhost:3001/sushis')
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`)
-        }
-
-        const data = await response.json()
-        setSushiList(
-          data.map((item) => {
-            return {
-              ...item,
-              isEaten: false,
-            }
-          })
-        )
-      } catch (error) {
-        alert(error)
-      }
+    if (data) {
+      setSushiList(data)
     }
+  }, [data])
 
-    fetchSushi()
-  }, [])
+  if (loading) return <h1>Loading...</h1>
+  if (error) return <h1>{error}</h1>
 
   const handleEatSushi = (sushiToEat) => {
     setSushiList(
@@ -58,8 +43,6 @@ function SushiContainer({ handleEatenSushi, budget }) {
     setStartIndex(startIndex + 4)
     setEndIndex(endIndex + 4)
   }
-
-  if (!sushiList) return <h2>Loading...</h2>
 
   return (
     <div className='belt'>
