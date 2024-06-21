@@ -17,7 +17,14 @@ function SushiContainer({ handleEatenSushi, budget }) {
         }
 
         const data = await response.json()
-        setSushiList(data)
+        setSushiList(
+          data.map((item) => {
+            return {
+              ...item,
+              isEaten: false,
+            }
+          })
+        )
       } catch (error) {
         alert(error)
       }
@@ -26,7 +33,28 @@ function SushiContainer({ handleEatenSushi, budget }) {
     fetchSushi()
   }, [])
 
+  const handleEatSushi = (sushiToEat) => {
+    setSushiList(
+      sushiList.map((sushi) => {
+        if (sushi.id === sushiToEat.id) {
+          return {
+            ...sushi,
+            isEaten: true,
+          }
+        } else {
+          return sushi
+        }
+      })
+    )
+  }
+
   const handleMoreBtnClick = () => {
+    if (endIndex === sushiList.length) {
+      setStartIndex(0)
+      setEndIndex(4)
+      return
+    }
+
     setStartIndex(startIndex + 4)
     setEndIndex(endIndex + 4)
   }
@@ -36,7 +64,15 @@ function SushiContainer({ handleEatenSushi, budget }) {
   return (
     <div className='belt'>
       {sushiList.slice(startIndex, endIndex).map((sushi) => {
-        return <Sushi key={`sushi${sushi.id}`} handleEatenSushi={handleEatenSushi} sushiInfo={sushi} budget={budget} />
+        return (
+          <Sushi
+            key={`sushi${sushi.id}`}
+            handleEatSushi={handleEatSushi}
+            handleEatenSushi={handleEatenSushi}
+            sushiInfo={sushi}
+            budget={budget}
+          />
+        )
       })}
       <MoreButton handleBtnClick={handleMoreBtnClick} />
     </div>
